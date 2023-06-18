@@ -1,0 +1,5 @@
+/.env
+/.pytest_cache/
+/ptb_mongo_docker_preset/__pycache__/
+/tests/__pycache__/
+*.pyc
