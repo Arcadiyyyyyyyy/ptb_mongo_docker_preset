@@ -1,6 +1,6 @@
-import enum
+from enum import Enum
 
 
-class Commands(enum):
+class Commands(Enum):
     start = "start"
     help = "help"
