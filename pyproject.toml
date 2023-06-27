@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "ptb_mongo_docker_preset"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.6"
 python-telegram-bot = "^20.3"
 pymongo = "^4.3.3"
 python-i18n = "^0.3.9"
