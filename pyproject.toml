@@ -11,11 +11,6 @@ python = "^3.6"
 python-telegram-bot = "^20.3"
 pymongo = "^4.3.3"
 python-i18n = "^0.3.9"
-flake8 = "3.9.2"
-tox = "3.24.3"
-pytest = "6.2.5"
-pytest-cov = "2.12.1"
-mypy = "=0.910"
 python-dotenv = "^1.0.0"
 
 
