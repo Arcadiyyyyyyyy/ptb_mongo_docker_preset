@@ -7,6 +7,7 @@ from utils.commodities import env_files_count
 from dotenv import load_dotenv
 from sys import stderr
 import logging
+import i18n
 import os
 
 
@@ -34,6 +35,14 @@ file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)
 logger.addHandler(stdout_handler)
+
+
+# set up i18n localization/internationalization
+locale_path = os.path.abspath('../locale')
+
+i18n.load_path.append(locale_path)
+i18n.set("fallback", "en")
+i18n.set("locale", "en")
 
 
 def main() -> None:
