@@ -11,25 +11,44 @@ import os
 load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
 
-try:
-    client: MongoClient[Mapping[str, Any] | Any] = MongoClient(MONGO_URI)
-    logging.info("Connected to the db successfully")
-    bot_db: Database[Mapping[str, Any] | Any] = client["tg_bot"]
-except ConnectionError:
-    logging.critical("Could not connect to the database.")
-    raise ConnectionError("Can't connect to the database, check .env")
+
+if MONGO_URI is None:
+    logging.critical("DB URI not found. Check .env")
+    raise ConnectionError("DB URI not found. Check .env")
+
+client: MongoClient[Mapping[str, Any] | Any] = MongoClient(MONGO_URI)
+logging.info("Connected to the db successfully")
+bot_db: Database[Mapping[str, Any] | Any] = client["tg_bot"]
 
 
 chat_collection = bot_db["chat"]
 
 
-def create_chat(user_id):
-    logging.debug("Started creating chat with id {:}".format(user_id))
-    logging.debug("Created chat with id {:}".format(user_id))
-    raise NotImplementedError
+def create_chat(chat_id: int, **kwargs):
+    logging.debug("Checking if chat with id {:} exists".format(chat_id))
+    chat = read_chat(chat_id)
+    if chat is None:
+        logging.debug("Started creating chat with id {:}".format(chat_id))
+
+        arguments = {
+            "chat_id": chat_id,
+            "language": "en",
+        }
+
+        result = chat_collection.insert_one(
+            {**arguments, **kwargs}
+        )
+        logging.debug("Finished creating chat with id {:}".format(chat_id))
+    else:
+        logging.debug("Chat with id {:} already exists, skipped".format(chat_id))
+        return
+
+    return result
 
 
-def read_chat(user_id):
-    logging.debug("Started reading chat with id {:}".format(user_id))
-    logging.debug("Finished reading chat with id {:}".format(user_id))
-    raise NotImplementedError
+def read_chat(chat_id: int):
+    logging.debug("Started reading chat with id {:}".format(chat_id))
+    result = chat_collection.find_one({"chat_id": chat_id}, {})
+    logging.debug("Finished reading chat with id {:}".format(chat_id))
+
+    return result

@@ -12,7 +12,6 @@ import os
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.WARNING
 )
-logger = logging.getLogger(__name__)
 
 
 # Get bot token from .env file
@@ -22,7 +21,7 @@ bot_token = os.getenv("TG_BOT_TOKEN")
 
 def main() -> None:
     if bot_token is None:
-        logger.critical("TG_BOT token not found. Check .env")
+        logging.critical("TG_BOT token not found. Check .env")
         return
 
     application = Application.builder().token(bot_token).build()
@@ -33,7 +32,7 @@ def main() -> None:
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, commands.unknown_text))
 
     # Run the bot until the admin presses Ctrl-C
-    logger.warning("Bot started")
+    logging.warning("Bot started")
     application.run_polling()
 
 
