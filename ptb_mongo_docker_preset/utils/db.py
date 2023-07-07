@@ -4,24 +4,25 @@ from pymongo.database import Database
 from dotenv import load_dotenv
 from typing import Any, Mapping
 
+from .commodities import env_files_count
+
 import logging
 import os
 
 
-load_dotenv()
-MONGO_URI = os.getenv("MONGO_URI")
+if env_files_count("../") >= 1:
+    load_dotenv()
+    MONGO_URI = os.getenv("MONGO_URI")
 
+    if MONGO_URI is None:
+        logging.critical("DB URI not found. Check .env")
+        raise ConnectionError("DB URI not found. Check .env")
 
-if MONGO_URI is None:
-    logging.critical("DB URI not found. Check .env")
-    raise ConnectionError("DB URI not found. Check .env")
+    client: MongoClient[Mapping[str, Any] | Any] = MongoClient(MONGO_URI)
+    logging.info("Connected to the db successfully")
+    bot_db: Database[Mapping[str, Any] | Any] = client["tg_bot"]
 
-client: MongoClient[Mapping[str, Any] | Any] = MongoClient(MONGO_URI)
-logging.info("Connected to the db successfully")
-bot_db: Database[Mapping[str, Any] | Any] = client["tg_bot"]
-
-
-chat_collection = bot_db["chat"]
+    chat_collection = bot_db["chat"]
 
 
 def create_chat(chat_id: int, **kwargs):
