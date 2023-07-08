@@ -28,7 +28,7 @@ Create a file with the name .env in the project home directory, and add it there
 TG_BOT_TOKEN=your_tg_bot_token
 MONGO_URI=your_mongo_db_uri
 ```
-
+ 
 MONGO_URI is `mongodb://localhost:27017/` if you want to run locally
 
 ### Startup
