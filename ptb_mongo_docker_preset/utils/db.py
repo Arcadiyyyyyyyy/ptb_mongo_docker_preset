@@ -53,3 +53,11 @@ def read_chat(chat_id: int):
     logging.debug("Finished reading chat with id {:}".format(chat_id))
 
     return result
+
+
+def change_chat_language(chat_id: int, new_lang_code: str):
+    logging.debug("Started changing chat language in id {:} to {:}".format(chat_id, new_lang_code))
+    result = chat_collection.update_one({"chat_id": chat_id}, {"$set": {"language": new_lang_code}})
+    logging.debug("Finished changing chat language in id {:} to {:}".format(chat_id, new_lang_code))
+
+    return result

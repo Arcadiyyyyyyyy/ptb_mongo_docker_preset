@@ -1,4 +1,13 @@
 en:
+  # Here should be available languages
+  english: English
+
+
+  # Here should be most used words
+  success: Success!
+
+
+  # Here should be rarely used strings
   start: Start
   help: Help
   unknown_text: Unknown text!

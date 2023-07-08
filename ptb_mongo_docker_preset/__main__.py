@@ -1,7 +1,15 @@
-from telegram.ext import Application, CommandHandler, MessageHandler, filters
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    MessageHandler,
+    filters,
+    CallbackQueryHandler,
+    ContextTypes,
+)
+from telegram import Update
 
 from utils import commands
-from utils.const import Commands as CommandNames
+from utils.const import Commands as CommandNames, QueryCategories
 from utils.commodities import env_files_count
 
 from dotenv import load_dotenv
@@ -45,6 +53,22 @@ i18n.set("fallback", "en")
 i18n.set("locale", "en")
 
 
+async def callback_query_distributor(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Global Callback Query distributor.
+    It's much easier to handle callbacks in one place, than in 100 different commands"""
+
+    # Checks for mypy
+    if update.callback_query is None or update.callback_query.data is None:
+        raise Exception("Input error")
+
+    category = update.callback_query.data.split("*")[0]
+
+    if category == QueryCategories.commands.value:
+        return await commands.local_query_handler(update, context)
+
+    logging.warning("Unknown query category type {:}. Some of your commands will work wrong.".format(category))
+
+
 def main() -> None:
     env_files = env_files_count("../")
     if env_files == 0:
@@ -69,6 +93,8 @@ def main() -> None:
     application.add_handler(CommandHandler(CommandNames.help.value, commands.help_command))
 
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, commands.unknown_text))
+
+    application.add_handler(CallbackQueryHandler(callback_query_distributor))
 
     # Run the bot until the admin presses Ctrl-C
     logging.warning("Bot started")
