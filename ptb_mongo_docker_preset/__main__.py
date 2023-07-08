@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 from sys import stderr
 import logging
 import i18n
+import sys
 import os
 
 
@@ -75,7 +76,8 @@ async def callback_query_distributor(update: Update, context: ContextTypes.DEFAU
 def main() -> None:
     # Get bot token from .env file
     load_dotenv()
-    logging.info(os.getenv("TG_BOT_TOKEN"))
+    
+    sys.path.append("../")
 
     env_files = env_files_count(os.path.abspath("../"))
     if env_files == 0:
