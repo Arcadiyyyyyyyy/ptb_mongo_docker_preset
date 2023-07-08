@@ -9,8 +9,7 @@ from telegram.ext import (
 from telegram import Update
 
 from utils import commands
-from utils.const import Commands as CommandNames, QueryCategories, Paths
-from utils.commodities import env_files_count
+from utils.const import Commands as CommandNames, QueryCategories
 
 from dotenv import load_dotenv
 from sys import stderr
@@ -73,15 +72,6 @@ async def callback_query_distributor(update: Update, context: ContextTypes.DEFAU
 
 
 def main() -> None:
-    env_files = env_files_count(Paths.path_to_dotenv.value)
-    if env_files == 0:
-        logging.critical("Can't find .env file")
-        return
-    elif env_files == 1:
-        logging.info("Env file found")
-    elif env_files > 1:
-        logging.warning("Found more than one .env files")
-
     # Get bot token from .env file
     load_dotenv()
     bot_token = os.getenv("TG_BOT_TOKEN")

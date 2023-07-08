@@ -16,7 +16,3 @@ class QueryCategories(Enum):
 
 class QueryCommands(Enum):
     lang_code_handle = "l_c_h"
-
-
-class Paths(Enum):
-    path_to_dotenv = "./"
