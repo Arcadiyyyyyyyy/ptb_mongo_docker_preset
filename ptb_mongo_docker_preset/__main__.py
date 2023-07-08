@@ -28,10 +28,13 @@ logging.getLogger('httpcore').setLevel(logging.WARNING)
 
 logger = logging.getLogger()
 
-logger.removeHandler(logger.handlers[0])
+try:
+    logger.removeHandler(logger.handlers[0])
+except IndexError:
+    pass
 
 logger.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(name)s | %(message)s')
+formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(filename)s | Line: %(lineno)d | %(name)s | %(message)s')
 
 stdout_handler = logging.StreamHandler(stderr)
 stdout_handler.setLevel(logging.DEBUG)
@@ -70,7 +73,7 @@ async def callback_query_distributor(update: Update, context: ContextTypes.DEFAU
 
 
 def main() -> None:
-    env_files = env_files_count("../")
+    env_files = env_files_count(os.path.abspath("../"))
     if env_files == 0:
         logging.critical("Can't find .env file")
         return
