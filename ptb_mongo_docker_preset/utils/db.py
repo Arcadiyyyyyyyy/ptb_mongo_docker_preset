@@ -5,12 +5,13 @@ from dotenv import load_dotenv
 from typing import Any, Mapping
 
 from .commodities import env_files_count
+from .const import Paths
 
 import logging
 import os
 
 
-if env_files_count("../") >= 1:
+if env_files_count(Paths.path_to_dotenv.value) >= 1:
     load_dotenv()
     MONGO_URI = os.getenv("MONGO_URI")
 

@@ -33,8 +33,7 @@ MONGO_URI is `mongodb://localhost:27017/` if you want to run locally
 
 ### Startup
 
-To start the script, run `poetry run python __main__.py` inside of the module directory (~/your_repo_name/your_repo_name>), 
-or run from IDE with `python __main__.py` 
+To start the script, run `poetry run python ptb_mongo_docker_preset` inside of the project home directory.
 
 ### Commits
 

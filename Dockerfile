@@ -45,6 +45,4 @@ RUN poetry install --no-root --no-interaction --no-cache --without dev
 COPY . .
 
 #run the application
-WORKDIR /ptb_mongo_docker_preset/ptb_mongo_docker_preset
-CMD ["ls", "-a"]
-CMD [ "poetry", "run", "python", "__main__.py"]
+CMD [ "poetry", "run", "python", "ptb_mongo_docker_preset"]
