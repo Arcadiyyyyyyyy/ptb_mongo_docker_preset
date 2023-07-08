@@ -48,7 +48,7 @@ logger.addHandler(stdout_handler)
 
 
 # set up i18n localization/internationalization
-locale_path = os.path.abspath('../locale')
+locale_path = os.path.abspath('./locale')
 
 i18n.load_path.append(locale_path)
 i18n.set("fallback", "en")

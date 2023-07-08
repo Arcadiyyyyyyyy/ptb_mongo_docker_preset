@@ -44,3 +44,23 @@ Run `tox` in your home project folder to run all tests before commit, or run the
 `mypy your_repo_name` <br>
 `pytest` <br>
 `flake8`
+
+### Server run
+
+To run on the ubuntu server, install docker and nano. 
+
+`nano restart.sh`
+```
+docker pull $DOCKER_IMAGE
+docker stop tgbot
+docker rm tgbot
+docker run -d --restart on-failure --Log—opt mode=non-blocking --log-opt max-buffer-sizeIUm --log-opt max-file=5 --name tgbot --env-file .env $DOCKER_IMAGE
+```
+Exit
+
+`nano .env` your env 
+
+#### To update or initially run
+`export DOCKER_IMAGE=` link to ghcr.io repo that GitHub will give you
+
+`/bin/bash ./restart.sh`
