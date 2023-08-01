@@ -31,13 +31,17 @@ MONGO_URI=your_mongo_db_uri
  
 MONGO_URI is `mongodb://localhost:27017/` if you want to run locally
 
+Change `from ptb_mongo...` in all files in tests directory to `from your_repo_name`
+
+Change the settings in your GitHub repo to `Actions > General > Workflow permissions > Read and write permissions`
+
 ### Startup
 
-To start the script, run `poetry run python ptb_mongo_docker_preset` inside of the project home directory.
+To start the script, run `poetry run python your_repo_name` inside of the project home directory.
 
 ### Commits
 
-Before committing your code, run `pip install -r requirements_dev` inside of your venv. 
+Before committing your code, run `pip install -r requirements_dev.txt` inside of your venv. 
 
 Run `tox` in your home project folder to run all tests before commit, or run them separately with:
 
